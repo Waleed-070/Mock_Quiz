@@ -14,57 +14,75 @@ public class TeacherLogin extends JFrame implements ActionListener {
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
         
+        // Create a main panel with BorderLayout to center the login panel
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(Color.WHITE);
+        
+        JPanel loginPanel = new JPanel();
+        loginPanel.setLayout(null);
+        loginPanel.setBackground(Color.WHITE);
+        loginPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        loginPanel.setPreferredSize(new Dimension(400, 350));
+        
         JLabel heading = new JLabel("Teacher Login");
-        heading.setBounds(750, 60, 300, 45);
-        heading.setFont(new Font("Viner Hand ITC", Font.BOLD, 40));
+        heading.setBounds(100, 20, 300, 45);
+        heading.setFont(new Font("Viner Hand ITC", Font.BOLD, 30));
         heading.setForeground(new Color(30, 144, 254));
-        add(heading);
+        loginPanel.add(heading);
         
         JLabel email = new JLabel("Email");
-        email.setBounds(810, 150, 300, 20);
+        email.setBounds(50, 80, 300, 20);
         email.setFont(new Font("Mongolian Baiti", Font.BOLD, 18));
         email.setForeground(new Color(30, 144, 254));
-        add(email);
+        loginPanel.add(email);
         
         tfemail = new JTextField();
-        tfemail.setBounds(735, 180, 300, 25);
-        tfemail.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        add(tfemail);
+        tfemail.setBounds(50, 110, 300, 25);
+        tfemail.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        loginPanel.add(tfemail);
         
         JLabel password = new JLabel("Password");
-        password.setBounds(810, 220, 300, 20);
+        password.setBounds(50, 150, 300, 20);
         password.setFont(new Font("Mongolian Baiti", Font.BOLD, 18));
         password.setForeground(new Color(30, 144, 254));
-        add(password);
+        loginPanel.add(password);
         
         tfpassword = new JPasswordField();
-        tfpassword.setBounds(735, 250, 300, 25);
-        tfpassword.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        add(tfpassword);
-        
-        login = new JButton("Login");
-        login.setBounds(735, 300, 120, 25);
-        login.setBackground(new Color(30, 144, 254));
-        login.setForeground(Color.WHITE);
-        login.addActionListener(this);
-        add(login);
+        tfpassword.setBounds(50, 180, 300, 25);
+        tfpassword.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        loginPanel.add(tfpassword);
         
         register = new JButton("Register");
-        register.setBounds(915, 300, 120, 25);
+        register.setBounds(50, 230, 120, 30);
         register.setBackground(new Color(30, 144, 254));
         register.setForeground(Color.WHITE);
         register.addActionListener(this);
-        add(register);
+        loginPanel.add(register);
+        
+        login = new JButton("Login");
+        login.setBounds(230, 230, 120, 30);
+        login.setBackground(new Color(30, 144, 254));
+        login.setForeground(Color.WHITE);
+        login.addActionListener(this);
+        loginPanel.add(login);
         
         back = new JButton("Back");
-        back.setBounds(825, 350, 120, 25);
+        back.setBounds(140, 280, 120, 30);
         back.setBackground(new Color(30, 144, 254));
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
-        add(back);
+        loginPanel.add(back);
         
-        setSize(1200, 500);
-        setLocation(200, 150);
+        // Add the login panel to the main panel which will center it
+        mainPanel.add(loginPanel);
+        
+        // Add the main panel to the frame
+        setContentPane(mainPanel);
+        
+        // Set frame properties
+        setSize(600, 500);
+        setLocationRelativeTo(null); // Center the window on the screen
+        setResizable(false);
         setVisible(true);
     }
     

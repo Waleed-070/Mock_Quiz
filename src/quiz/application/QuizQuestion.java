@@ -50,7 +50,7 @@ public class QuizQuestion {
     }
     
     public int getCorrectOptionIndex() {
-        // Convert 'A', 'B', 'C', 'D' to 0, 1, 2, 3
+       
         return correctAnswer.charAt(0) - 'A';
     }
 } 

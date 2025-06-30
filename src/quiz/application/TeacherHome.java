@@ -15,13 +15,13 @@ public class TeacherHome extends JFrame implements ActionListener {
         setLayout(null);
         
         heading = new JLabel("Teacher Dashboard");
-        heading.setBounds(750, 60, 300, 45);
+        heading.setBounds(270, 60, 400, 45);
         heading.setFont(new Font("Viner Hand ITC", Font.BOLD, 40));
         heading.setForeground(new Color(30, 144, 254));
         add(heading);
         
         createQuiz = new JButton("Create Quiz");
-        createQuiz.setBounds(735, 150, 300, 40);
+        createQuiz.setBounds(300, 150, 300, 40);
         createQuiz.setBackground(new Color(30, 144, 254));
         createQuiz.setForeground(Color.WHITE);
         createQuiz.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -29,7 +29,7 @@ public class TeacherHome extends JFrame implements ActionListener {
         add(createQuiz);
         
         viewQuestions = new JButton("View Questions");
-        viewQuestions.setBounds(735, 220, 300, 40);
+        viewQuestions.setBounds(300, 220, 300, 40);
         viewQuestions.setBackground(new Color(30, 144, 254));
         viewQuestions.setForeground(Color.WHITE);
         viewQuestions.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -37,7 +37,7 @@ public class TeacherHome extends JFrame implements ActionListener {
         add(viewQuestions);
         
         viewResults = new JButton("View Results");
-        viewResults.setBounds(735, 290, 300, 40);
+        viewResults.setBounds(300, 290, 300, 40);
         viewResults.setBackground(new Color(30, 144, 254));
         viewResults.setForeground(Color.WHITE);
         viewResults.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -45,14 +45,14 @@ public class TeacherHome extends JFrame implements ActionListener {
         add(viewResults);
         
         logout = new JButton("Logout");
-        logout.setBounds(735, 360, 300, 40);
+        logout.setBounds(300, 360, 300, 40);
         logout.setBackground(new Color(30, 144, 254));
         logout.setForeground(Color.WHITE);
         logout.setFont(new Font("Times New Roman", Font.BOLD, 20));
         logout.addActionListener(this);
         add(logout);
         
-        setSize(1200, 500);
+        setSize(800, 500);
         setLocation(200, 150);
         setVisible(true);
     }
@@ -74,6 +74,6 @@ public class TeacherHome extends JFrame implements ActionListener {
     }
     
     public static void main(String[] args) {
-        new TeacherHome("test@example.com"); // For testing purposes
+        new TeacherHome("test@example.com"); 
     }
 } 

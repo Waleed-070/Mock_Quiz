@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Login extends JFrame implements ActionListener {
  
@@ -14,61 +14,73 @@ public class Login extends JFrame implements ActionListener {
     
     Login() {
         getContentPane().setBackground(Color.WHITE);
-        setLayout(null);
+        setLayout(new BorderLayout());
         
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        
+        JPanel imagePanel = new JPanel(new BorderLayout());
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/login.jpeg"));
         JLabel image = new JLabel(i1);
-        image.setBounds(0, 0, 600, 500);
-        add(image);
+        imagePanel.add(image, BorderLayout.CENTER);
+        imagePanel.setPreferredSize(new Dimension(600, 500));
+        
+        JPanel formPanel = new JPanel(null);
+        formPanel.setBackground(Color.WHITE);
         
         JLabel heading = new JLabel("Simple Minds");
-        heading.setBounds(750, 60, 300, 45);
+        heading.setBounds(150, 60, 300, 45);
         heading.setFont(new Font("Viner Hand ITC", Font.BOLD, 40));
         heading.setForeground(new Color(30, 144, 254));
-        add(heading);
+        formPanel.add(heading);
         
         JLabel name = new JLabel("Enter your username");
-        name.setBounds(810, 150, 300, 20);
+        name.setBounds(210, 150, 300, 20);
         name.setFont(new Font("Mongolian Baiti", Font.BOLD, 18));
         name.setForeground(new Color(30, 144, 254));
-        add(name);
+        formPanel.add(name);
         
         tfname = new JTextField();
-        tfname.setBounds(735, 200, 300, 25);
+        tfname.setBounds(135, 200, 300, 25);
         tfname.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        add(tfname);
+        formPanel.add(tfname);
         
         JLabel courseLabel = new JLabel("Select Course");
-        courseLabel.setBounds(810, 230, 300, 20);
+        courseLabel.setBounds(210, 230, 300, 20);
         courseLabel.setFont(new Font("Mongolian Baiti", Font.BOLD, 18));
         courseLabel.setForeground(new Color(30, 144, 254));
-        add(courseLabel);
+        formPanel.add(courseLabel);
         
-        courseDropdown = new JComboBox<>(getCourses());
-        courseDropdown.setBounds(735, 260, 300, 25);
+        ArrayList<String> courseList = getCourses();
+        courseDropdown = new JComboBox<>(courseList.toArray(new String[0]));
+        courseDropdown.setBounds(135, 260, 300, 25);
         courseDropdown.setBackground(Color.WHITE);
-        add(courseDropdown);
+        formPanel.add(courseDropdown);
         
         beginButton = new JButton("Begin");
-        beginButton.setBounds(735, 300, 120, 25);
+        beginButton.setBounds(135, 300, 120, 25);
         beginButton.setBackground(new Color(30, 144, 254));
         beginButton.setForeground(Color.WHITE);
         beginButton.addActionListener(this);
-        add(beginButton);
+        formPanel.add(beginButton);
         
         back = new JButton("Back");
-        back.setBounds(915, 300, 120, 25);
+        back.setBounds(315, 300, 120, 25);
         back.setBackground(new Color(30, 144, 254));
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
-        add(back);
+        formPanel.add(back);
         
         teacherLogin = new JButton("Teacher Login");
-        teacherLogin.setBounds(735, 350, 300, 25);
+        teacherLogin.setBounds(135, 350, 300, 25);
         teacherLogin.setBackground(new Color(30, 144, 254));
         teacherLogin.setForeground(Color.WHITE);
         teacherLogin.addActionListener(this);
-        add(teacherLogin);
+        formPanel.add(teacherLogin);
+        
+        mainPanel.add(imagePanel, BorderLayout.WEST);
+        mainPanel.add(formPanel, BorderLayout.CENTER);
+        
+        add(mainPanel);
         
         setSize(1200, 500);
         setLocation(200, 150);
@@ -76,14 +88,14 @@ public class Login extends JFrame implements ActionListener {
     }
 
     
-    private Vector<String> getCourses() {
-        Vector<String> courses = new Vector<>();
-        courses.add("Select Course"); // Default option
+    private ArrayList<String> getCourses() {
+        ArrayList<String> courses = new ArrayList<>();
+        courses.add("Select Course"); 
         
         try {
             Connection conn = DBConnection.getConnection();
-            Statement stmt = conn.createStatement();
             String query = "SELECT DISTINCT course FROM teachers WHERE course IS NOT NULL";
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             
             while (rs.next()) {
@@ -105,8 +117,6 @@ public class Login extends JFrame implements ActionListener {
     private void updateStudentRecord(String username, String course) {
         try {
             Connection conn = DBConnection.getConnection();
-            
-            // Check if student exists
             String checkQuery = "SELECT id FROM students WHERE username = ? AND course = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
             checkStmt.setString(1, username);
@@ -114,14 +124,12 @@ public class Login extends JFrame implements ActionListener {
             ResultSet rs = checkStmt.executeQuery();
             
             if (rs.next()) {
-                // Update existing student's timestamp
                 String updateQuery = "UPDATE students SET created_at = CURRENT_TIMESTAMP WHERE username = ? AND course = ?";
                 PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
                 updateStmt.setString(1, username);
                 updateStmt.setString(2, course);
                 updateStmt.executeUpdate();
             } else {
-                // Insert new student
                 String insertQuery = "INSERT INTO students (username, course, mark) VALUES (?, ?, 0)";
                 PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
                 insertStmt.setString(1, username);
@@ -151,7 +159,6 @@ public class Login extends JFrame implements ActionListener {
                 return;
             }
             
-            // Update student record in database
             updateStudentRecord(username, selectedCourse);
             
             setVisible(false);
